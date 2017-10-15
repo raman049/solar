@@ -26,15 +26,16 @@ public class Connect {
 
 	}
 
-	public static String login(String username, String password) {
-		String output = null;
+	public static String[] login(String username, String password) {
+		String[] output = new String[2];
 		try {
-			String query = "SELECT STAFFCODE, PASSWORD FROM users WHERE STAFFCODE ='" + username + "' ";
+			String query = "SELECT STAFFCODE, PASSWORD,STATUS FROM users WHERE STAFFCODE ='" + username + "' ";
 			ResultSet rs = st.executeQuery(query);
 			while (rs.next()) {
 				if (rs.getString("STAFFCODE").equals(username) && rs.getString("PASSWORD").equals(password)) {
 					System.out.println("approved");
-					output = username;
+					output[0] = username;
+					output[1] = rs.getString("STATUS");
 				} else {
 					System.out.println("disapproved");
 					JOptionPane.showMessageDialog(null, "Please Check your username and password",
@@ -47,7 +48,25 @@ public class Connect {
 		}
 		return output;
 	}
-
+	
+	public static String[] userinfo(String user) {
+		String[] userInfo = new String[4];
+		try{
+			String query = "SELECT * FROM staffmain WHERE STAFFCODE ='"+user+"' ";
+			ResultSet rs = st.executeQuery(query);
+			while(rs.next()){
+				userInfo[0]= rs.getString("FIRSTNAME");
+				userInfo[1]= rs.getString("LASTNAME");
+				userInfo[2]= rs.getString("BRANCHID");
+				userInfo[3]= rs.getString("BRANCHNAME");
+			}			
+		}catch(Exception e){
+			System.out.println("userinfo query failed");
+		}
+		
+		return userInfo;
+	}
+	
 	public static String[] getCategory() {
 		// String [] item = {};
 		String[] item = new String[10];
