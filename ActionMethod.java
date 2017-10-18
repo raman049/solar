@@ -26,6 +26,7 @@ public class ActionMethod extends JPanel {
 	static JLabel itemLabel;
 	static JLabel priceLabel;
 	static JLabel quantityLabel;
+	static JTable productTable2;
 
 	public static JPanel inventory() {
 		MpanelInventory = new JPanel();
@@ -72,49 +73,66 @@ public class ActionMethod extends JPanel {
 	}
 
 	public static JPanel addInventory() {
-
-		String[][] myArrayAddInv = new String[5][4];
+		System.out.println("addINvent panel");
 		MpanelAddInvetory = new JPanel();
 		MpanelAddInvetory.setLayout(new BoxLayout(MpanelAddInvetory, BoxLayout.Y_AXIS));
-
-		System.out.println("addInventory button = action method addInventory");
-		JPanel addInvePanel = new JPanel();
-		addInvePanel.setLayout(new BoxLayout(addInvePanel, BoxLayout.Y_AXIS));
-
-		JPanel serachPanel = new JPanel();
-		serachPanel.setLayout(new GridLayout(1, 2, 1, 1));
+		JPanel searchPanel = new JPanel();
+		searchPanel.setLayout(new GridLayout(1, 3, 10, 5));
 		JButton search = new JButton("Search");
-		String[] item2 = Connect.getCategory();
-		JComboBox<String> itemComboBox2 = new JComboBox<String>(item2);
-		serachPanel.add(itemComboBox2);
-		serachPanel.add(search);
-
-		JPanel productPanel2 = new JPanel();
-		productPanel2.setLayout(new GridLayout(2, 5, 0, 0));
-		String[] columTitle2 = { "Product", "Price", "Available", "Add Item" };
-		Object[][] productList = myArrayAddInv;
-		JTable productTable2 = new JTable(productList, columTitle2);
-		productPanel2.add(new JScrollPane(productTable2));
-		MpanelAddInvetory.add(serachPanel);
-		MpanelAddInvetory.add(productPanel2);
-
+		JButton update = new JButton("Update");
+		String[] item = Connect.getCategory();
+		JComboBox<String> itemComboBox = new JComboBox<String>(item);
+		searchPanel.add(itemComboBox);
+		searchPanel.add(search);
+		
+		MpanelAddInvetory.add(searchPanel);
+		JPanel productPanel = new JPanel();
+		productPanel.setLayout(new GridLayout(5, 3));
+		productPanel.setVisible(false);
+		MpanelAddInvetory.add(productPanel);
 		search.addActionListener(new ActionListener() {
-
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Object category = itemComboBox.getSelectedItem();
+				List<ProdutDetail> cc = Connect.getCategoryItem(String.valueOf(category));
+				String[] columTitle = {"Product", "Price", "Available","Add Quantity" };
+				Object[][] productList = new Object[cc.size()][4];
+				productPanel.removeAll();
+				int j = 0;
+				for (ProdutDetail i : cc) {
+					itemLabel = new JLabel(i.pname);
+					priceLabel = new JLabel(String.valueOf(i.pprice));
+					quantityLabel = new JLabel(String.valueOf(i.pqty));
+					productList[j][0] = i.pname;
+					productList[j][1] = i.pprice;
+					productList[j][2] = i.pqty;
+					j++;
+				}
+				 productTable2 = new JTable(productList, columTitle);
+				productPanel.add(new JScrollPane(productTable2));
+				System.out.println(productTable2.getValueAt(2, 3));
+				productPanel.validate();
+				productPanel.repaint();	
+				searchPanel.add(update);
+				productPanel.setVisible(true);
+				
+			}
+		});
+		
+		update.addActionListener(new ActionListener() {
+			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				Object a = itemComboBox2.getSelectedItem();
-				// bb = Connect.getCategoryItem(aa);
-				// String[][] cc = Connect.getCategoryItem(aa);
-				// ResultSet cc = Connect.getCategoryItem(aa);
-				for (int i = 0; i < myArrayAddInv.length; i++) {
-					for (int j = 0; j < 3; j++) {
-						// myArrayAddInv[i][j] = cc[i][j];
-					}
-				}
-				MpanelAddInvetory.repaint();
+				System.out.println("update");
+				System.out.println("updated item");
+				//int a = (int)productTable.getValueAt(1, 2);
+				//int b = (int)productTable.getValueAt(1, 3);
+				//System.out.println(a+b);
+				
 			}
 		});
+		MpanelAddInvetory.repaint();
 		return MpanelAddInvetory;
 
 	}
