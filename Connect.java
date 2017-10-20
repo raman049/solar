@@ -128,6 +128,14 @@ public class Connect {
 		return catItem;
 	}
 
+	public static void updateQuantity(String productName, int newQuantity){
+		try{
+			String query = "UPDATE product set pqty = 'newQuantiy' WHERE pname = '"+productName+"' ";
+			st.executeUpdate(query);
+		}catch(Exception e){
+			System.out.println("update query failed");
+		}
+	}
 }
 
 class ProdutDetail {

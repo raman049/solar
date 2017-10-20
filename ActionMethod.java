@@ -48,7 +48,7 @@ public class ActionMethod extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				Object category = itemComboBox.getSelectedItem();
 				List<ProdutDetail> cc = Connect.getCategoryItem(String.valueOf(category));
-				String[] columTitle = {"Product", "Price", "Available" };
+				String[] columTitle = { "Product", "Price", "Available" };
 				Object[][] productList = new Object[cc.size()][3];
 				productPanel.removeAll();
 				int j = 0;
@@ -64,7 +64,7 @@ public class ActionMethod extends JPanel {
 				JTable productTable = new JTable(productList, columTitle);
 				productPanel.add(new JScrollPane(productTable));
 				productPanel.validate();
-				productPanel.repaint();	
+				productPanel.repaint();
 				productPanel.setVisible(true);
 			}
 		});
@@ -84,7 +84,7 @@ public class ActionMethod extends JPanel {
 		JComboBox<String> itemComboBox = new JComboBox<String>(item);
 		searchPanel.add(itemComboBox);
 		searchPanel.add(search);
-		
+
 		MpanelAddInvetory.add(searchPanel);
 		JPanel productPanel = new JPanel();
 		productPanel.setLayout(new GridLayout(5, 3));
@@ -95,7 +95,7 @@ public class ActionMethod extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				Object category = itemComboBox.getSelectedItem();
 				List<ProdutDetail> cc = Connect.getCategoryItem(String.valueOf(category));
-				String[] columTitle = {"Product", "Price", "Available","Add Quantity" };
+				String[] columTitle = { "Product", "Price", "Available", "Add Quantity" };
 				Object[][] productList = new Object[cc.size()][4];
 				productPanel.removeAll();
 				int j = 0;
@@ -108,28 +108,45 @@ public class ActionMethod extends JPanel {
 					productList[j][2] = i.pqty;
 					j++;
 				}
-				 productTable2 = new JTable(productList, columTitle);
+				productTable2 = new JTable(productList, columTitle);
 				productPanel.add(new JScrollPane(productTable2));
-				System.out.println(productTable2.getValueAt(2, 3));
+				// System.out.println(productTable2.getValueAt(2, 3));
 				productPanel.validate();
-				productPanel.repaint();	
+				productPanel.repaint();
 				searchPanel.add(update);
 				productPanel.setVisible(true);
-				
 			}
 		});
-		
+
 		update.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				System.out.println("update");
 				System.out.println("updated item");
-				//int a = (int)productTable.getValueAt(1, 2);
-				//int b = (int)productTable.getValueAt(1, 3);
-				//System.out.println(a+b);
-				
+				System.out.println(productTable2.getRowCount());
+				for (int i = 0; i < productTable2.getRowCount(); i++) {
+					Object oa = productTable2.getValueAt(i, 2);
+					Object ob = productTable2.getValueAt(i, 3);
+					if(oa != null && ob != null){
+					String a = String.valueOf(oa);
+					String b = String.valueOf(ob);
+					int ai = Integer.valueOf(a);
+					int bi = 0;
+					if (b != "") {
+						bi = Integer.valueOf(b);
+					}
+					
+					int newQuantity = ai + bi;
+					System.out.println(newQuantity);
+					}
+				}
+				// String a = String.valueOf(productTable2.getValueAt(1, 2));
+				// String b = String.valueOf(productTable2.getValueAt(1,3));
+				// int ai = Integer.valueOf(a);
+				// int bi = Integer.valueOf(b);
+				// int newQuantity = ai + bi;
+				// System.out.println(newQuantity);
+
 			}
 		});
 		MpanelAddInvetory.repaint();
