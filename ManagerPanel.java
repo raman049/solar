@@ -97,6 +97,7 @@ public class ManagerPanel extends JPanel implements ActionListener {
 			System.out.println("inventory button");
 			bottomManagerPanelAddInventory.setVisible(false);
 			bottomManagerPanelCreateOrder.setVisible(false);
+			bottomManagerPanelAddCustomer.setVisible(false);
 			bottomManagerPanelInventory.setVisible(true);
 
 		}
@@ -104,12 +105,14 @@ public class ManagerPanel extends JPanel implements ActionListener {
 			System.out.println("addInventory button");
 			bottomManagerPanelInventory.setVisible(false);
 			bottomManagerPanelCreateOrder.setVisible(false);
+			bottomManagerPanelAddCustomer.setVisible(false);
 			bottomManagerPanelAddInventory.setVisible(true);
 		}
 		if (e.getSource() == createOrder) {
 			System.out.println("createOrder button");
 			bottomManagerPanelInventory.setVisible(false);
 			bottomManagerPanelAddInventory.setVisible(false);
+			bottomManagerPanelAddCustomer.setVisible(false);
 			bottomManagerPanelCreateOrder.setVisible(true);
 		}
 		if (e.getSource() == addCustomer) {

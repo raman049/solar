@@ -151,6 +151,7 @@ public class ActionMethod extends JPanel {
 							}
 							int newQuantity = ai + bi;
 							Connect.updateQuantity(productName, newQuantity);
+							productTable2.setValueAt("", i, 3);
 						} catch (Exception e2) {
 							JOptionPane.showMessageDialog(null, "Quantiy must be a positive number only",
 									"InfoBox: " + "Error", JOptionPane.INFORMATION_MESSAGE);
@@ -171,9 +172,9 @@ public class ActionMethod extends JPanel {
 		MpanelCreateOrder = new JPanel();
 		MpanelCreateOrder.setLayout(new BoxLayout(MpanelCreateOrder, BoxLayout.Y_AXIS));
 		JPanel searchPanel = new JPanel();
-		searchPanel.setLayout(new GridLayout(2, 2, 10, 5));
-		JButton searchCustomer = new JButton("Search Customer");
-		JButton selectCustomer = new JButton("Create Order");
+		searchPanel.setLayout(new GridLayout(2, 3, 10, 5));
+		JLabel customerLabel = new JLabel("Customer :");
+		JButton createOrderNo = new JButton("Create Order no");
 		List<String> customerList = Connect.getCustomer();
 		String[] customer = new String[customerList.size()];
 		for (int i = 0; i < customerList.size(); i++) {
@@ -186,9 +187,9 @@ public class ActionMethod extends JPanel {
 		JButton createOrder = new JButton("Create Order");
 		String[] item = Connect.getCategory();
 		JComboBox<String> itemComboBox = new JComboBox<String>(item);
+		searchPanel.add(customerLabel);
 		searchPanel.add(customerComboBox);
-		searchPanel.add(searchCustomer);
-		searchPanel.add(selectCustomer);
+		searchPanel.add(createOrderNo);
 		// searchPanel.add(itemComboBox);
 		// searchPanel.add(search);
 		MpanelCreateOrder.add(searchPanel);
